@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Your Todo List</h2>
-    <form method="POST" action="{{ url_for('index') }}">
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.description.label(class="form-control-label") }}
-            {{ form.description(class="form-control", placeholder="Enter task description") }}
-        </div>
-        <div class="form-group">
-            {{ form.due_date.label(class="form-control-label") }}
-            {{ form.due_date(class="form-control", placeholder="YYYY-MM-DD HH:MM") }}
-            <small class="form-text text-muted">Format: YYYY-MM-DD HH:MM (Optional)</small>
-        </div>
-        <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
-    </form>
+<body class="index-page">
+    <h2 class="index-title">Your Todo List</h2>
+
+
+    <button class="btn btn-info mb-3" type="button" data-toggle="collapse" data-target="#addTaskForm" aria-expanded="false" aria-controls="addTaskForm">
+        Add Task
+    </button>
+
+
+    <div class="collapse" id="addTaskForm">
+        <form method="POST" action="{{ url_for('index') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}
+                {{ form.description(class="form-control", placeholder="Enter task description") }}
+            </div>
+            <div class="form-group">
+                {{ form.due_date.label(class="form-control-label") }}
+                {{ form.due_date(class="form-control", placeholder="MM-DD-YYYY HH:MM") }}
+                <small class="form-text text-muted">Format: MM-DD-YYYY HH:MM(Optional)</small>
+            </div>
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
 
     <hr>
 
-    <h3>Pending Tasks</h3>
+
+    <h3>Upcoming Tasks</h3>
     {% if todo_tasks %}
         <table class="table table-striped">
             <thead>
@@ -33,17 +44,21 @@
                         <td>{{ task.description }}</td>
                         <td>
                             {% if task.due_date %}
-                                {{ task.due_date.strftime('%Y-%m-%d %H:%M') }}
+                                {% if authenticated %}
+                                    {{ task.due_date.strftime('%m-%d-%Y %H:%M') }}
+                                {% else %}
+                                    {{ task.due_date }}
+                                {% endif %}
                             {% else %}
                                 -
                             {% endif %}
                         </td>
                         <td>
-                            <form method="POST" action="{{ url_for('complete_task', task_id=task.id) }}" style="display:inline;">
-                                <button type="submit" class="btn btn-success btn-sm">Complete</button>
+                            <form method="POST" action="{{ url_for('complete_task', task_uuid=task.uuid) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-light btn-sm">Complete</button>
                             </form>
-                            <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <form method="POST" action="{{ url_for('delete_task', task_uuid=task.uuid) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-dark btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -51,14 +66,15 @@
             </tbody>
         </table>
     {% else %}
-        <p>No pending tasks.</p>
+        <p class="no-u-tasks">No pending tasks.</p>
     {% endif %}
 
     <hr>
 
+    <!-- Completed Tasks Section -->
     <h3>Completed Tasks</h3>
     {% if completed_tasks %}
-        <table class="table table-striped">
+        <table class="table table-striped" id="completed-section">
             <thead>
                 <tr>
                     <th>Description</th>
@@ -72,14 +88,18 @@
                         <td>{{ task.description }}</td>
                         <td>
                             {% if task.due_date %}
-                                {{ task.due_date.strftime('%Y-%m-%d %H:%M') }}
+                                {% if authenticated %}
+                                    {{ task.due_date.strftime('%Y-%m-%d %H:%M') }}
+                                {% else %}
+                                    {{ task.due_date }}
+                                {% endif %}
                             {% else %}
                                 -
                             {% endif %}
                         </td>
                         <td>
-                            <form method="POST" action="{{ url_for('delete_task', task_id=task.id) }}" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <form method="POST" action="{{ url_for('delete_task', task_uuid=task.uuid) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-dark btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -87,6 +107,11 @@
             </tbody>
         </table>
     {% else %}
-        <p>No completed tasks.</p>
+        <p class="no-c-tasks">No completed tasks.</p>
     {% endif %}
+</body>
 {% endblock %}
+
+
+
+

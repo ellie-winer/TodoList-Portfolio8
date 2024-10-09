@@ -17,5 +17,7 @@ class LoginForm(FlaskForm):
 
 class TaskForm(FlaskForm):
     description = StringField('Task Description', validators=[DataRequired(), Length(max=300)])
-    due_date = DateTimeField('Complete By (optional)', format='%Y-%m-%d %H:%M', validators=[Optional()])
-    submit = SubmitField('Add Task')
+    due_date = DateTimeField('Complete By (optional)', format='%m-%d-%Y %H:%M', validators=[Optional()])
+    submit = SubmitField('Submit')
+
+

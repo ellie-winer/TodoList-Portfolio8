@@ -1,0 +1,82 @@
+.navbar {
+background-color: #0074E1;
+overflow: hidden;
+}
+
+.navbar-brand {
+color: #FFFFFF;
+}
+
+.nav-link {
+color: #FFFFFF;
+}
+
+.navbar-nav .nav-link:hover {
+color: #F79E02
+}
+
+.index-page {
+background-color: #10E7DC;
+
+}
+
+.index-title {
+text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.9),
+        0 0 40px rgba(255, 255, 255, 0.7),
+        0 0 60px rgba(255, 255, 255, 0.5);
+color: #F79E02;
+margin-bottom: 50px;
+margin-top: 60px;
+font-size: 3rem;
+text-align: center
+}
+
+.btn .btn-info {
+background-color: #88E1F5;
+color: #88E1F5;
+margin-top: 60px;
+}
+
+hr {
+background: #F79E02;
+margin-top: 60px;
+}
+
+h3 {
+color: #FFFFFF;
+margin-top: 30px;
+margin-bottom: 50px;
+text-decoration: underline;
+}
+
+.no-u-tasks {
+color: #1B9CE5;
+}
+
+.no-c-tasks {
+color: #1B9CE5;
+margin-bottom: 100px;
+}
+
+tr:nth-child(odd) {
+background-color: #88E1F5;
+}
+
+#completed-section {
+margin-bottom: 200px;
+}
+
+footer {
+background-color: #F79E02;
+overflow: hidden;
+height: 60px;
+width: 100%;
+bottom: 0;
+padding: 5px 0;
+position: relative;
+}
+
+.footer-text {
+color: #FFFFFF;
+}
